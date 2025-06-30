@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Weather - Privacy-First Offline Weather Tracker</title>
+    <meta name="description" content="Local Weather is a free, offline weather tracker for Android. Download weather data and view it locally without constant internet connectivity.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #ebdbb2;
+            background-color: #1d2021;
+            padding-top: 80px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: #282828;
+            padding: 1rem 0;
+            border-bottom: 2px solid #3c3836;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .home-link {
+            color: #83a598;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .home-link:hover {
+            color: #b8bb26;
+            text-decoration: underline;
+        }
+
+        .coming-soon-badge {
+            background-color: #fe8019;
+            color: #1d2021;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .app-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+        }
+
+        h1 {
+            color: #fabd2f;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 3rem 0;
+            background: linear-gradient(135deg, #282828 0%, #1d2021 100%);
+        }
+
+        .feature-banner {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            margin-bottom: 2rem;
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            color: #d5c4a1;
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .section {
+            padding: 4rem 0;
+            border-bottom: 1px solid #3c3836;
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            color: #fabd2f;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature-item {
+            background-color: #282828;
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid #3c3836;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-4px);
+            border-color: #504945;
+        }
+
+        .feature-item h3 {
+            color: #fabd2f;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .feature-item p {
+            color: #d5c4a1;
+        }
+
+        .feature-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #1d2021;
+            flex-shrink: 0;
+        }
+
+        .feature-icon.download {
+            background-color: #fabd2f;
+        }
+
+        .feature-icon.charts {
+            background-color: #fe8019;
+        }
+
+        .feature-icon.history {
+            background-color: #83a598;
+        }
+
+        .feature-icon.offline {
+            background-color: #fb4934;
+        }
+
+        .feature-icon.location {
+            background-color: #8ec07c;
+        }
+
+        .feature-icon.themes {
+            background-color: #d3869b;
+        }
+
+        .screenshots-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .screenshot {
+            background-color: #282828;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #3c3836;
+            transition: transform 0.2s ease;
+        }
+
+        .screenshot:hover {
+            transform: scale(1.02);
+        }
+
+        .screenshot img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .screenshot-caption {
+            padding: 1rem;
+            color: #a89984;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .coming-soon-section {
+            background-color: #282828;
+            border-radius: 12px;
+            padding: 3rem;
+            text-align: center;
+            border: 2px solid #3c3836;
+            scroll-margin-top: 100px;
+        }
+
+        .coming-soon-section h3 {
+            color: #fabd2f;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .coming-soon-section p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: #d5c4a1;
+        }
+
+        .development-status {
+            background-color: #1d2021;
+            padding: 2rem;
+            border-radius: 8px;
+            border-left: 4px solid #fabd2f;
+            margin-top: 2rem;
+            text-align: left;
+        }
+
+        .development-status h4 {
+            color: #fabd2f;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .development-status ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .development-status li {
+            color: #d5c4a1;
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .development-status li::before {
+            content: "✓";
+            color: #fabd2f;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        footer {
+            background-color: #282828;
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid #3c3836;
+        }
+
+        footer p {
+            color: #a89984;
+            margin-bottom: 0.5rem;
+        }
+
+        footer a {
+            color: #83a598;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+            color: #8ec07c;
+        }
+        
+        .footer-links {
+            margin-top: 1rem;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+
+            .header-left {
+                justify-content: center;
+            }
+
+            .coming-soon-badge {
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .tagline {
+                font-size: 1.2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .screenshots-gallery {
+                grid-template-columns: 1fr;
+            }
+
+            .coming-soon-section {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="header-left">
+                    <a href="index.html" class="home-link">← Minimal Suite</a>
+                    <img src="graphics/local_weather_icon.png" alt="Local Weather Icon" class="app-icon">
+                    <h1>Local Weather</h1>
+                </div>
+                <span class="coming-soon-badge">Coming Soon</span>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <p class="tagline">Download weather data once, view your history offline with beautiful charts and insights</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="coming-soon-section">
+                <h3>In Development</h3>
+                <p>Local Weather is being developed with a focus on offline functionality, data ownership, and beautiful weather visualization.</p>
+                
+                <div class="development-status">
+                    <h4>Current Features in Development:</h4>
+                    <ul>
+                        <li>Download weather data for your ZIP codes</li>
+                        <li>Beautiful hourly temperature and precipitation charts</li>
+                        <li>Local weather history storage and tracking</li>
+                        <li>Multiple location support with ZIP code management</li>
+                        <li>Offline weather data viewing and analysis</li>
+                        <li>Multiple theme options including light and dark modes</li>
+                        <li>Weather condition icons and detailed descriptions</li>
+                        <li>Privacy-first design with local data storage</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2>Planned Features</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <h3><span class="feature-icon download">⬇</span> Download & Store</h3>
+                    <p>Download weather data for your locations once, then view it offline. No constant internet connection required.</p>
+                </div>
+                <div class="feature-item">
+                    <h3><span class="feature-icon charts">📊</span> Beautiful Charts</h3>
+                    <p>Visualize temperature, precipitation, and weather patterns with interactive charts and hourly forecasts.</p>
+                </div>
+                <div class="feature-item">
+                    <h3><span class="feature-icon history">📅</span> Weather History</h3>
+                    <p>Track weather patterns over time with local storage of your weather data and historical analysis.</p>
+                </div>
+                <div class="feature-item">
+                    <h3><span class="feature-icon location">📍</span> Multiple Locations</h3>
+                    <p>Add and manage multiple ZIP codes, switch between locations, and track weather in different areas.</p>
+                </div>
+                <div class="feature-item">
+                    <h3><span class="feature-icon offline">🔒</span> Offline First</h3>
+                    <p>All weather data stored locally. View your weather history even when you're completely offline.</p>
+                </div>
+                <div class="feature-item">
+                    <h3><span class="feature-icon themes">🎨</span> Multiple Themes</h3>
+                    <p>Choose from beautiful light and dark themes with color schemes that match your preference.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2>Preview Screenshots</h2>
+            <div class="screenshots-gallery">
+                <div class="screenshot">
+                    <img src="graphics/weather_main_dark.png" alt="Weather Main Screen Dark">
+                    <div class="screenshot-caption">Current weather with detailed conditions</div>
+                </div>
+                <div class="screenshot">
+                    <img src="graphics/weather_main_light.png" alt="Weather Main Screen Light">
+                    <div class="screenshot-caption">Clean light theme with weather data</div>
+                </div>
+                <div class="screenshot">
+                    <img src="graphics/weather_hourly_temp.png" alt="Hourly Temperature Chart">
+                    <div class="screenshot-caption">Interactive hourly temperature chart</div>
+                </div>
+                <div class="screenshot">
+                    <img src="graphics/weather_precipitation.png" alt="Precipitation Chart">
+                    <div class="screenshot-caption">Precipitation tracking and forecasting</div>
+                </div>
+                <div class="screenshot">
+                    <img src="graphics/weather_themes.png" alt="Weather Themes Dark">
+                    <div class="screenshot-caption">Theme selection with color previews</div>
+                </div>
+                <div class="screenshot">
+                    <img src="graphics/weather_themes_light.png" alt="Weather Themes Light">
+                    <div class="screenshot-caption">Light mode theme selection</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Local Weather. All rights reserved.</p>
+            <div class="footer-links">
+                <p><a href="https://github.com/BrigBryu/local_weather" target="_blank">View on GitHub</a></p>
+                <p><a href="privacy.html">Privacy Policy</a></p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Habit - Privacy-First Habit Tracker</title>
+    <meta name="description" content="Local Habit is a free, offline habit tracker for Android. No cloud, no accounts, no ads. Just habits tracked locally on your device.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #ebdbb2;
+            background-color: #1d2021;
+            padding-top: 80px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: #282828;
+            padding: 1rem 0;
+            border-bottom: 2px solid #3c3836;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .home-link {
+            color: #83a598;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .home-link:hover {
+            color: #b8bb26;
+            text-decoration: underline;
+        }
+
+        .coming-soon-badge {
+            background-color: #fe8019;
+            color: #1d2021;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .app-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+        }
+
+        h1 {
+            color: #8ec07c;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 3rem 0;
+            background: linear-gradient(135deg, #282828 0%, #1d2021 100%);
+        }
+
+        .feature-banner {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            margin-bottom: 2rem;
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            color: #d5c4a1;
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .section {
+            padding: 4rem 0;
+            border-bottom: 1px solid #3c3836;
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            color: #8ec07c;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature-item {
+            background-color: #282828;
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid #3c3836;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-4px);
+            border-color: #504945;
+        }
+
+        .feature-item h3 {
+            color: #8ec07c;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .feature-item p {
+            color: #d5c4a1;
+        }
+
+        .feature-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #1d2021;
+            flex-shrink: 0;
+        }
+
+        .feature-icon.habit-types {
+            background-color: #8ec07c;
+        }
+
+        .feature-icon.bundles {
+            background-color: #83a598;
+        }
+
+        .feature-icon.streak {
+            background-color: #fabd2f;
+        }
+
+        .feature-icon.privacy {
+            background-color: #fb4934;
+        }
+
+        .feature-icon.weekly {
+            background-color: #d3869b;
+        }
+
+        .feature-icon.themes {
+            background-color: #fe8019;
+        }
+
+        .screenshots-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .screenshot {
+            background-color: #282828;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #3c3836;
+            transition: transform 0.2s ease;
+        }
+
+        .screenshot:hover {
+            transform: scale(1.02);
+        }
+
+        .screenshot img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .screenshot-caption {
+            padding: 1rem;
+            color: #a89984;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .coming-soon-section {
+            background-color: #282828;
+            border-radius: 12px;
+            padding: 3rem;
+            text-align: center;
+            border: 2px solid #3c3836;
+            scroll-margin-top: 100px;
+        }
+
+        .coming-soon-section h3 {
+            color: #8ec07c;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .coming-soon-section p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: #d5c4a1;
+        }
+
+        .development-status {
+            background-color: #1d2021;
+            padding: 2rem;
+            border-radius: 8px;
+            border-left: 4px solid #8ec07c;
+            margin-top: 2rem;
+            text-align: left;
+        }
+
+        .development-status h4 {
+            color: #8ec07c;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .development-status ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .development-status li {
+            color: #d5c4a1;
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .development-status li::before {
+            content: "✓";
+            color: #8ec07c;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        footer {
+            background-color: #282828;
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid #3c3836;
+        }
+
+        footer p {
+            color: #a89984;
+            margin-bottom: 0.5rem;
+        }
+
+        footer a {
+            color: #83a598;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+            color: #8ec07c;
+        }
+        
+        .footer-links {
+            margin-top: 1rem;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+
+            .header-left {
+                justify-content: center;
+            }
+
+            .coming-soon-badge {
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .tagline {
+                font-size: 1.2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .screenshots-gallery {
+                grid-template-columns: 1fr;
+            }
+
+            .coming-soon-section {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="header-left">
+                    <a href="index.html" class="home-link">← Minimal Suite</a>
+                    <img src="graphics/local_habit_icon.png" alt="Local Habit Icon" class="app-icon">
+                    <h1>Local Habit</h1>
+                </div>
+                <span class="coming-soon-badge">Coming Soon</span>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <p class="tagline">Privacy-first habit tracking with multiple habit types, bundles, and local storage</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="coming-soon-section">
+                <h3>In Development</h3>
+                <p>Local Habit is currently being developed with a focus on privacy, flexibility, and offline functionality.</p>
+                
+                <div class="development-status">
+                    <h4>Current Features in Development:</h4>
+                    <ul>
+                        <li>Multiple habit types (Basic, Bundle, Stack, Avoidance, Interval, Weekly)</li>
+                        <li>Habit bundles for grouping related habits</li>
+                        <li>Weekly habits with custom day selection</li>
+                        <li>Beautiful dark theme with teal/cyan accents</li>
+                        <li>Local SQLite storage - no cloud required</li>
+                        <li>Streak tracking and progress visualization</li>
+                        <li>Multiple theme options (Vim-inspired color schemes)</li>
+                        <li>Completely offline functionality</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2>Planned Features</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <h3><span class="feature-icon habit-types">⚡</span> Multiple Habit Types</h3>
+                    <p>Basic daily habits, weekly routines, habit stacks, avoidance tracking, and interval-based habits for maximum flexibility.</p>
+                </div>
+                <div class="feature-item">
+                    <h3><span class="feature-icon bundles">📦</span> Habit Bundles</h3>
+                    <p>Group related habits into bundles like "morning routine" or "workout session" for better organization and tracking.</p>
+                </div>
+                <div class="feature-item">
+                    <h3><span class="feature-icon weekly">📅</span> Weekly Habits</h3>
+                    <p>Set habits for specific days of the week with custom scheduling and "due in X days" notifications.</p>
+                </div>
+                <div class="feature-item">
+                    <h3><span class="feature-icon streak">🔥</span> Streak Tracking</h3>
+                    <p>Visual progress tracking with streak counters and completion statistics to keep you motivated.</p>
+                </div>
+                <div class="feature-item">
+                    <h3><span class="feature-icon privacy">🔒</span> Complete Privacy</h3>
+                    <p>All data stored locally in SQLite. No accounts, no analytics, no cloud syncing. Your habits stay private.</p>
+                </div>
+                <div class="feature-item">
+                    <h3><span class="feature-icon themes">🎨</span> Beautiful Themes</h3>
+                    <p>Multiple color themes including Dracula, Gruvbox, Nord, Solarized, and more for a personalized experience.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2>Preview Screenshots</h2>
+            <div class="screenshots-gallery">
+                <div class="screenshot">
+                    <img src="graphics/habit_empty_state.png" alt="Local Habit Empty State">
+                    <div class="screenshot-caption">Clean empty state with add habit button</div>
+                </div>
+                <div class="screenshot">
+                    <img src="graphics/habit_add_basic.png" alt="Add Basic Habit Screen">
+                    <div class="screenshot-caption">Add habit form with type selection</div>
+                </div>
+                <div class="screenshot">
+                    <img src="graphics/habit_types.png" alt="Habit Types Selection">
+                    <div class="screenshot-caption">Multiple habit types with helpful tips</div>
+                </div>
+                <div class="screenshot">
+                    <img src="graphics/habit_weekly.png" alt="Weekly Habit Configuration">
+                    <div class="screenshot-caption">Weekly habit with day selection</div>
+                </div>
+                <div class="screenshot">
+                    <img src="graphics/habit_bundle.png" alt="Habit Bundle View">
+                    <div class="screenshot-caption">Morning routine bundle with progress</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Local Habit. All rights reserved.</p>
+            <div class="footer-links">
+                <p><a href="https://github.com/BrigBryu/local_habit" target="_blank">View on GitHub</a></p>
+                <p><a href="privacy.html">Privacy Policy</a></p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
