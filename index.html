@@ -229,8 +229,32 @@
         }
 
         .value-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1rem;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #1d2021;
+        }
+
+        .value-icon.privacy {
+            background-color: #fb4934;
+        }
+
+        .value-icon.offline {
+            background-color: #83a598;
+        }
+
+        .value-icon.minimal {
+            background-color: #fabd2f;
+        }
+
+        .value-icon.opensource {
+            background-color: #b8bb26;
         }
 
         .value-item h3 {
@@ -385,22 +409,22 @@
             <h2>Our Values</h2>
             <div class="values-grid">
                 <div class="value-item">
-                    <div class="value-icon">🔒</div>
+                    <div class="value-icon privacy">●</div>
                     <h3>Privacy First</h3>
                     <p>Your data never leaves your device. No analytics, no tracking, no phone home.</p>
                 </div>
                 <div class="value-item">
-                    <div class="value-icon">📱</div>
+                    <div class="value-icon offline">■</div>
                     <h3>Fully Offline</h3>
                     <p>All apps work completely offline. Internet is optional, privacy is guaranteed.</p>
                 </div>
                 <div class="value-item">
-                    <div class="value-icon">🎯</div>
+                    <div class="value-icon minimal">▲</div>
                     <h3>Minimal Design</h3>
                     <p>Clean, focused interfaces without bloat. Just the features you need.</p>
                 </div>
                 <div class="value-item">
-                    <div class="value-icon">🔓</div>
+                    <div class="value-icon opensource">♦</div>
                     <h3>Open Source</h3>
                     <p>All our code is open source. Transparency you can trust and verify.</p>
                 </div>

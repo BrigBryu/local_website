@@ -161,7 +161,32 @@
         }
 
         .feature-icon {
-            font-size: 1.5rem;
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #1d2021;
+            flex-shrink: 0;
+        }
+
+        .feature-icon.storage {
+            background-color: #83a598;
+        }
+
+        .feature-icon.export {
+            background-color: #b8bb26;
+        }
+
+        .feature-icon.cloud {
+            background-color: #fb4934;
+        }
+
+        .feature-icon.themes {
+            background-color: #fabd2f;
         }
 
         .screenshots-gallery {
@@ -406,19 +431,19 @@
             <h2>Features</h2>
             <div class="features-grid">
                 <div class="feature-item">
-                    <h3>🗄️ Local SQLite Storage</h3>
+                    <h3><span class="feature-icon storage">■</span> Local SQLite Storage</h3>
                     <p>Save notes locally in SQLite database. Your data stays on your device, completely private and secure.</p>
                 </div>
                 <div class="feature-item">
-                    <h3>📤 Export & Import</h3>
+                    <h3><span class="feature-icon export">▲</span> Export & Import</h3>
                     <p>Export individual notes as .txt files or export multiple notes as a .zip archive. Import them back anytime.</p>
                 </div>
                 <div class="feature-item">
-                    <h3>🔒 No Cloud Required</h3>
+                    <h3><span class="feature-icon cloud">●</span> No Cloud Required</h3>
                     <p>No account, ads, analytics, or internet access required. Works completely offline for maximum privacy.</p>
                 </div>
                 <div class="feature-item">
-                    <h3>🎨 Vim Themes</h3>
+                    <h3><span class="feature-icon themes">♦</span> Vim Themes</h3>
                     <p>Choose from beautiful themes based on popular Vim color schemes like Gruvbox, Dracula, Solarized, and more.</p>
                 </div>
             </div>
