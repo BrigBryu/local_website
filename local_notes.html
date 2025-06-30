@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Notes - Privacy-First Offline Text Editor</title>
+    <meta name="description" content="Local Notes is a free, offline text editor for Android. No cloud, no accounts, no ads. Just notes stored locally on your device.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #ebdbb2;
+            background-color: #1d2021;
+            padding-top: 80px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: #282828;
+            padding: 1rem 0;
+            border-bottom: 2px solid #3c3836;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .home-link {
+            color: #83a598;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .home-link:hover {
+            color: #b8bb26;
+            text-decoration: underline;
+        }
+
+        .become-tester-btn {
+            background-color: #fabd2f;
+            color: #1d2021;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background-color 0.2s ease;
+            cursor: pointer;
+        }
+
+        .become-tester-btn:hover {
+            background-color: #d79921;
+        }
+
+        .app-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+        }
+
+        h1 {
+            color: #fabd2f;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 3rem 0;
+            background: linear-gradient(135deg, #282828 0%, #1d2021 100%);
+        }
+
+        .feature-banner {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            margin-bottom: 2rem;
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            color: #d5c4a1;
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .section {
+            padding: 4rem 0;
+            border-bottom: 1px solid #3c3836;
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            color: #fabd2f;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature-item {
+            background-color: #282828;
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid #3c3836;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-4px);
+            border-color: #504945;
+        }
+
+        .feature-item h3 {
+            color: #fabd2f;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .feature-item p {
+            color: #d5c4a1;
+        }
+
+        .feature-icon {
+            font-size: 1.5rem;
+        }
+
+        .screenshots-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .screenshot {
+            background-color: #282828;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #3c3836;
+            transition: transform 0.2s ease;
+        }
+
+        .screenshot:hover {
+            transform: scale(1.02);
+        }
+
+        .screenshot img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .screenshot-caption {
+            padding: 1rem;
+            color: #a89984;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .get-access {
+            background-color: #282828;
+            border-radius: 12px;
+            padding: 3rem;
+            text-align: center;
+            border: 2px solid #3c3836;
+            scroll-margin-top: 100px;
+        }
+
+        .get-access h3 {
+            color: #fabd2f;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .get-access p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: #d5c4a1;
+        }
+
+        .platform-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .platform-option {
+            background-color: #1d2021;
+            padding: 2rem;
+            border-radius: 8px;
+            border: 1px solid #3c3836;
+        }
+
+        .platform-option h4 {
+            color: #fabd2f;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .access-steps {
+            background-color: #282828;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #b8bb26;
+            margin-top: 1rem;
+        }
+
+        .access-steps p {
+            margin-bottom: 0.5rem;
+            color: #d5c4a1;
+        }
+
+        .access-steps a,
+        .platform-option a {
+            color: #83a598;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .access-steps a:hover,
+        .platform-option a:hover {
+            text-decoration: underline;
+            color: #8ec07c;
+        }
+
+        .coming-soon-info {
+            background-color: #282828;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #665c54;
+            margin-top: 1rem;
+            color: #a89984;
+        }
+
+        footer {
+            background-color: #282828;
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid #3c3836;
+        }
+
+        footer p {
+            color: #a89984;
+            margin-bottom: 0.5rem;
+        }
+
+        footer a {
+            color: #83a598;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+            color: #8ec07c;
+        }
+        
+        .footer-links {
+            margin-top: 1rem;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+
+            .header-left {
+                justify-content: center;
+            }
+
+            .become-tester-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .tagline {
+                font-size: 1.2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .screenshots-gallery {
+                grid-template-columns: 1fr;
+            }
+
+            .get-access {
+                padding: 2rem;
+            }
+
+            .platform-options {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .platform-option {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="header-left">
+                    <a href="index.html" class="home-link">← Minimal Suite</a>
+                    <img src="graphics/local_notes_icon copy.png" alt="Local Notes Icon" class="app-icon">
+                    <h1>Local Notes</h1>
+                </div>
+                <a href="#get-access" class="become-tester-btn">Become a Tester</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <img src="graphics/local_notes_feature_graphic copy.png" alt="Local Notes Feature Banner" class="feature-banner">
+        </div>
+    </section>
+
+    <section class="section" id="get-access">
+        <div class="container">
+            <div class="get-access">
+                <h3>Get Early Access</h3>
+                <p>Local Notes is currently in closed testing. Choose your platform to get started:</p>
+                
+                <div class="platform-options">
+                    <div class="platform-option">
+                        <h4>Android Testing</h4>
+                        <p>Follow these steps to access the Android beta:</p>
+                        <div class="access-steps">
+                            <p><strong>Step 1:</strong> <a href="https://groups.google.com/g/local-notes-testing" target="_blank" rel="noopener">Join the Google Group</a></p>
+                            <p><strong>Step 2:</strong> <a href="https://play.google.com/apps/testing/com.brigbryu.localnotes" target="_blank" rel="noopener">Visit the Play Store Testing Page</a></p>
+                            <p><strong>Step 3:</strong> Click "Become a Tester" button on the testing page</p>
+                            <p><strong>Step 4:</strong> Download and keep the app installed for 14 days (Google requirement for testing)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="platform-option">
+                        <h4>iOS Testing</h4>
+                        <p>Coming Soon!</p>
+                        <div class="coming-soon-info">
+                            <p>iOS version is currently in development and will be available for testing soon.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2>Features</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <h3>🗄️ Local SQLite Storage</h3>
+                    <p>Save notes locally in SQLite database. Your data stays on your device, completely private and secure.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>📤 Export & Import</h3>
+                    <p>Export individual notes as .txt files or export multiple notes as a .zip archive. Import them back anytime.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>🔒 No Cloud Required</h3>
+                    <p>No account, ads, analytics, or internet access required. Works completely offline for maximum privacy.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>🎨 Vim Themes</h3>
+                    <p>Choose from beautiful themes based on popular Vim color schemes like Gruvbox, Dracula, Solarized, and more.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2>Screenshots</h2>
+            <div class="screenshots-gallery">
+                <div class="screenshot">
+                    <img src="graphics/Screenshot_1751127525 copy.png" alt="Local Notes Home Screen">
+                    <div class="screenshot-caption">Home screen with your notes</div>
+                </div>
+                <div class="screenshot">
+                    <img src="graphics/Screenshot_1751127602 copy.png" alt="Grocery List in Dark Theme">
+                    <div class="screenshot-caption">Grocery list in dark theme</div>
+                </div>
+                <div class="screenshot">
+                    <img src="graphics/Screenshot_1751127622 copy.png" alt="Vim-Style Color Themes">
+                    <div class="screenshot-caption">Vim-style color themes</div>
+                </div>
+                <div class="screenshot">
+                    <img src="graphics/Screenshot_1751127542 copy.png" alt="Settings Screen">
+                    <div class="screenshot-caption">Settings and export options</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Local Notes. All rights reserved.</p>
+            <div class="footer-links">
+                <p><a href="https://github.com/BrigBryu/local_notes" target="_blank">View on GitHub</a></p>
+                <p><a href="privacy.html">Privacy Policy</a></p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

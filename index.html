@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimal Suite - Privacy-First Local Apps</title>
+    <meta name="description" content="Privacy-first, fully local, minimal apps that never phone home or display ads. Complete control of your data.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #ebdbb2;
+            background-color: #1d2021;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: #282828;
+            padding: 1.5rem 0;
+            border-bottom: 2px solid #3c3836;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fabd2f;
+            text-decoration: none;
+        }
+
+        .tagline-small {
+            color: #a89984;
+            font-size: 0.9rem;
+            margin-left: 10px;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            background: linear-gradient(135deg, #282828 0%, #1d2021 100%);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            color: #ebdbb2;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .hero .tagline {
+            font-size: 1.3rem;
+            color: #d5c4a1;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.5;
+        }
+
+        .cta-button {
+            background-color: #fabd2f;
+            color: #1d2021;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.2s ease;
+        }
+
+        .cta-button:hover {
+            background-color: #d79921;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(250, 189, 47, 0.3);
+        }
+
+        /* Mission Section */
+        .section {
+            padding: 4rem 0;
+            border-bottom: 1px solid #3c3836;
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        .mission {
+            text-align: center;
+            background-color: #282828;
+        }
+
+        .mission h2 {
+            font-size: 2.5rem;
+            color: #fabd2f;
+            margin-bottom: 2rem;
+        }
+
+        .mission p {
+            font-size: 1.2rem;
+            color: #d5c4a1;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Apps Section */
+        .apps-section h2 {
+            font-size: 2.5rem;
+            color: #fabd2f;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .app-card {
+            background-color: #282828;
+            border: 1px solid #3c3836;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .app-card:hover {
+            transform: translateY(-4px);
+            border-color: #504945;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .app-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 16px;
+            margin: 0 auto 1.5rem;
+            display: block;
+        }
+
+        .app-card h3 {
+            color: #ebdbb2;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .app-card p {
+            color: #a89984;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+
+        .app-button {
+            background-color: #83a598;
+            color: #1d2021;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.2s ease;
+        }
+
+        .app-button:hover {
+            background-color: #458588;
+            transform: translateY(-1px);
+        }
+
+        .app-button.coming-soon {
+            background-color: #665c54;
+            color: #a89984;
+            cursor: default;
+        }
+
+        .app-button.coming-soon:hover {
+            background-color: #665c54;
+            transform: none;
+        }
+
+        /* Values Section */
+        .values {
+            background-color: #282828;
+        }
+
+        .values h2 {
+            font-size: 2.5rem;
+            color: #fabd2f;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .value-item {
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .value-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .value-item h3 {
+            color: #ebdbb2;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .value-item p {
+            color: #a89984;
+            line-height: 1.5;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #282828;
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid #3c3836;
+        }
+
+        footer p {
+            color: #a89984;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #83a598;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .footer-links a:hover {
+            color: #b8bb26;
+            text-decoration: underline;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero .tagline {
+                font-size: 1.1rem;
+            }
+
+            .section {
+                padding: 3rem 0;
+            }
+
+            .mission h2,
+            .apps-section h2,
+            .values h2 {
+                font-size: 2rem;
+            }
+
+            .apps-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .app-card {
+                padding: 1.5rem;
+            }
+
+            .values-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .container {
+                padding: 0 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">Minimal Suite</a>
+                <span class="tagline-small">Privacy-first local apps</span>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Privacy-First Apps</h1>
+            <p class="tagline">
+                Fully local, minimal apps that never phone home or display ads. 
+                We give you complete control of your data.
+            </p>
+            <a href="#apps" class="cta-button">Try Our Apps Today</a>
+        </div>
+    </section>
+
+    <section class="section mission">
+        <div class="container">
+            <h2>Our Mission</h2>
+            <p>
+                Privacy-first, fully local, minimal apps that never phone home or display ads. 
+                We believe your data should stay on your device, under your control. 
+                All our apps work completely offline and are open-source.
+            </p>
+        </div>
+    </section>
+
+    <section class="section" id="apps">
+        <div class="container">
+            <h2 class="apps-section">App Showcase</h2>
+            <div class="apps-grid">
+                <div class="app-card">
+                    <img src="graphics/local_notes_icon_512.png" alt="Local Notes" class="app-icon">
+                    <h3>Local Notes</h3>
+                    <p>Clean, offline text editor with SQLite storage. Export your notes, choose from beautiful themes, and keep everything private.</p>
+                    <a href="local_notes.html" class="app-button">Learn More</a>
+                </div>
+
+                <div class="app-card">
+                    <img src="graphics/local_habit_icon_512.png" alt="Habit Tracker" class="app-icon">
+                    <h3>Habit Tracker</h3>
+                    <p>Build better habits with a simple, local tracker. No cloud sync, no data collection - just you and your progress.</p>
+                    <a href="#" class="app-button coming-soon">Coming Soon</a>
+                </div>
+
+                <div class="app-card">
+                    <img src="graphics/local_weather_icon_512.png" alt="Offline Weather" class="app-icon">
+                    <h3>Offline Weather</h3>
+                    <p>Get weather updates and store them locally. View your weather history without constant internet connectivity.</p>
+                    <a href="#" class="app-button coming-soon">Coming Soon</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section values">
+        <div class="container">
+            <h2>Our Values</h2>
+            <div class="values-grid">
+                <div class="value-item">
+                    <div class="value-icon">🔒</div>
+                    <h3>Privacy First</h3>
+                    <p>Your data never leaves your device. No analytics, no tracking, no phone home.</p>
+                </div>
+                <div class="value-item">
+                    <div class="value-icon">📱</div>
+                    <h3>Fully Offline</h3>
+                    <p>All apps work completely offline. Internet is optional, privacy is guaranteed.</p>
+                </div>
+                <div class="value-item">
+                    <div class="value-icon">🎯</div>
+                    <h3>Minimal Design</h3>
+                    <p>Clean, focused interfaces without bloat. Just the features you need.</p>
+                </div>
+                <div class="value-item">
+                    <div class="value-icon">🔓</div>
+                    <h3>Open Source</h3>
+                    <p>All our code is open source. Transparency you can trust and verify.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Minimal Suite. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="https://github.com/BrigBryu" target="_blank">GitHub</a>
+                <a href="mailto:contact@minimalsuite.com">Contact</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
